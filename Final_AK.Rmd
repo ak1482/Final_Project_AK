@@ -1,0 +1,219 @@
+---
+title: "Final_Project_AK"
+output: html_document
+date: "2023-11-13"
+---
+
+
+
+```{r Packages}
+library(tidyverse)
+```
+
+<span style="font-weight:bold; font-size:25px; text-align: center;"> BIOL 706 Final Project: Investigating Novel Endolysins as Antibiotic-Free Alternatives in Bio-Ethanol Fermentation</span>
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">Introduction</span>
+
+      It is estimated that by 2030, the US will require 60 billion gallons of bioethanol, a widely consumed sustainable fuel which is produced via the fermentation of corn-mash using yeast. These fermentation cultures are extensively contaminated by bacteria, primarily Lactobacilli (other LAB are significant as well), which causes a drastic decrease in the yield of bioethanol. Lactobacilli are very well adapted to fermentation conditions which include high ethanol, acidic pH, and minimized oxygen. Limosilactobacillus fermentum (L. fermentum), which is a major contaminant, has been shown to decrease the yield of ethanol by roughly 27% (Roach et al., 2013). LAB are known to compete for sugars and other micronutrients that are optimal for bioethanol production by yeast biocatalysts. Furthermore, under high levels of contamination, LAB produced large amounts of lactic acid and acetic acid, which are detrimental to the growth of yeast, thereby causing “stuck” fermentations (Roach et al., 2013). Keeping in mind the high demand and cost of production, this is not economically viable. The standard of treatment at the moment is the use of antibiotics like virginiamycin, penicillin and erythromycin alongside expensive disinfecting strategies, neither of which are sustainable in the long term. Overuse of antibiotics is an imminent issue not just in healthcare, but in all sectors of life due to the looming threat of drug-resistant bacteria. This fuels the need to search for antibiotic-free antimicrobials.
+      
+      The bacterial cell wall is composed primarily of peptidoglycan (PG). In order to grow and divide, bacteria need to lyse this substance which they accomplish with PG hydrolases. Bacteriophages are viruses that infect bacteria and take over their metabolic machinery to reproduce. They also produce a class of PG hydrolases known as endolysins, which are secreted to lyse bacteria at the end of their lytic cycle. This class of PG hydrolases could potentially be employed to curb bacterial contamination. As shown in Figure 1., there are various sub-classes of endolysins based on the bonds that they degrade in the peptidoglycan cell wall – glycosidases, amidases, endopeptidases, or trans-glycosylases (Nelson et al., 2012). The PG structure is almost entirely hydrocarbons and is highly resistant to mutations. Besides, resistance is usually developed against compounds that are mobilized intracellularly, while there are no known mechanisms against extracellular hydrolases (Khatibi et al., 2014). Therefore, bacteriophage endolysins are highly insusceptible to development of resistance by bacteria (Roach et al., 2013).
+      
+![Figure 1. Bonds of the PG backbone cleaved by various sub-classes of PG hydrolases.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/FIgure1.png)
+      
+      
+      Endolysins (causing lysis from within) when dosed externally are able to cause autolysis (lysis from without) of bacteria. This is especially true for gram positive bacteria while lack an extracellular membrane. Most major contaminants of bioethanol fermentations are gram positive, providing further support for the investigation of endolysins. In an ideal scenario, one lysin molecule is able to degrade enough bonds in the PG layer to kill the bacteria (Roach et al., 2013). Lastly, while bacteriophage specificity is a concern when exploring antimicrobial activity, a plethora of endolysins are shown to have a relatively broad spectrum (Kim et al., 2018).
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">Materials and Methods</span>
+
+Plasmid transformation
+
+      The experiment focused on glycosidases and endopeptidases found naturally in fermentation cultures. An extensive literature review revealed a list of five endolysins – that are referred to as a “wish list” in this study– of known biochemical activity and potential antimicrobial applications. Their peptidoglycan-binding domains and active sites were identified and annotated (InterProScan, InterPro protein signature databases). To mine for novel endolysins specifically from the bioethanol industry, samples from various corn-based bioethanol refineries were sequenced (Illumina) to create a metagenome assembly. An in-silico phage genome assembly was created and annotated by searching for conserved bacteriophage sequences and using them to create larger contigs. The annotated genes were used to mine for endolysin sequences which were then blasted against the aforementioned wish list to narrow down those that had homologous amino acid sequences or similar PG binding domains. The final list comprised of 16 novel endolysins, 5 wish list endolysins (positive control) and GusA (negative control). GusA is a reporter gene that encodes beta-glucuronidase which produces a color change when acting on its corresponding substrate. Its significance lay in the fact that the GusA gene was inserted into the same backbone as the rest of the endolysins. In addition, an empty pUC19 vector was used as a negative control. The 22 sequences were cloned into a pET-21 based vector with an ampicillin marker and a C-terminal Hisx6-tag. 
+      The workflow began with a heat-shock transformation of the 22 constructs into E. coli BL21-AI (Arabinose Induction, Thermofisher). A standard protocol was modified to account for the toxic gene in the following ways. As shown in Figure 2., the pET-21 vector comprises of the endolysin gene controlled by a T7 promoter which can only be bound by T7 RNA polymerase. The expression of this T7 RNA polymerase is regulated on the BL-21AI chromosomal DNA by an arabinose operon. The arabinose operon serves to metabolize the sugar, arabinose, in the absence of glucose. However, when glucose is present, it is the preferred metabolite and functions as a repressor of the arabinose operon. Similarly, the expression of the endolysin gene was controlled by an added layer of protection – the lac operator. In the presence of glucose this lac operator is bound by the LacI repressor. In the absence of glucose and presence of lactose (or its analogs), the repressor is bound by lactose and forced to detach from the operator, thereby promoting transcription. The genetic switches were used to regulate the system both during transformation and the subsequent induction. 
+
+![Figure 2. Genetic control using pET-21 vector and E. coli BL21-AI chromosomal DNA.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure2.png)
+
+      During transformation, it was essential to prevent any autolysis and thereby any formation of endolysin. A high concentration of glucose (1.0% w/v) was therefore added to the reaction, to repress the arabinose operon, prevent synthesis of T7 RNA polymerase and subsequently, the production of endolysin by leaving the T7 promoter unbound. Furthermore, it served to leave LacI bound to the operator which created a genetic roadblock in the event that the T7 promoter was bound. To confirm success of transformation, a 1% agarose gel was run and PCR genotyping was performed.
+    
+  
+Induction and extraction of endolysins 
+
+      The next step was to induce the production of the endolysins in the E. coli system. The genetic strategy was reversed from the first step. Arabinose and IPTG (Isopropyl β- d-1-thiogalactopyranoside), which is a lactose-analog that cannot be metabolized, were added to the system which created a reverse cascade by activating the arabinose operon and unbinding the lac operator. A small concentration of glucose (0.1% w/v) was added to prevent overloading of the system. The overexpression was carried out at 225 RPM at 30°C for 4 hours (OD600=0.4). In order to extract the expressed protein, the cells were lysed using B-Per Bacterial lysis solution and DNaseI protocol (Thermofisher). The soluble fraction of the expressed protein was used for all further analysis. GusA Activity Assay was conducted to analyze success of induction using protocol described by Axelsson et al. (2003) and an SDS-PAGE of the soluble fraction was run. The concentration of total soluble protein was calculated using a Bradford Assay (Bio-Rad) and a Densitometry analysis (GeneTools 4.3.16.0, Synergy) of the SDS-PAGE was used to estimate expressed endolysin concentration. Endolysin concentrations were not normalized, and the decision was made to move forth with a fixed volume.
+    
+    
+Growth inhibition assay
+
+      A growth inhibition assay was performed by exposing 30 indicator strains to the extracted endolysins as shown in Figure 3. Twenty-eight bacterial strains which were selected from major known contaminants of bioethanol fermentations. Additionally, 2 yeast strains were used to make sure the endolysins did not interfere with yeast activity. Four antibiotics including 2 ppm Erythromycin (EM), 10 ppm Chloramphenicol (CM), 2 ppm Penicillin G (PenG) and 3 ppm Virginiamycin (Vir), as well as 2 known antimicrobials (30 ppm Hops acids and 50 ppm [approx. 1.25 ppm pure] nisin Z) and 20 g/ml Chicken Lysozyme were used as positive controls. Each indicator strain was exposed to the endolysins, positive and negative controls in 3 technical replicates on an individual 96 well-plate. The final reaction volume in each well was 200 L and composed of a 1:1 ratio of the 10% (v/v) endolysin extract in growth media and 5 x 105 CFU/mL of the indicator strains – this is usually on the higher end of contamination during the first 12 hours of fermentation. Careful consideration was made to keep the final protein extract volume below 5% to make sure that the endolysin lysis buffer did not interfere with bacterial growth. Culture plates were incubated at 33C statically and Optical Density at 600 nm (OD600) was read at time points 12 hours and 24 hours and a heat map was constructed where the inhibition was calculated relative to 0 inhibition of GusA. The cut-off was set at 20% inhibition.
+
+![Figure 3. Set-up for growth inhibition assay against 30 indicator strains.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure3.png)
+
+
+
+
+
+
+
+![Figure 4. Description of experimental design and workflow.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure4.png)
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">Results</span>
+
+      The PCR genotyping revealed that the observed sizes of endolysin amplicons matched the expected sizes (Fig. 5 and Table 1). GusA activity was only detected in the induced GusA sample (“induced C1”), none detected in the uninduced sample or the induced and uninduced pUC19 empty vector (Fig. 6).
+  
+![Table 1. Expected sizes of endolysin amplicons.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Table1.png)
+
+
+
+
+
+
+
+
+![Figure 5. Agarose gel electrophoresis of PCR on transformants.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure5.png)
+
+     Those that showed partial autolysis, expressed a lower concentration of total soluble protein and endolysin. Some endolysins were below quantitative limits (Fig. 7). SDS-PAGE shows that C1 (GusA) and C6 (endopeptidase) produced high concentrations of protein, whereas C2-C5 (glycosidases) show low endolysin expression (Fig. 8). Figure 9 shows the growth inhibition assay for different endolysins. Some indicator strains were more sensitive than others, but those that were sensitive seemed to be so to a range of endolysins. Some endolysins seemed to have narrow activity and some had broader activity. Most endolysin candidates showed more inhibition than lysozyme, the positive control.
+
+
+```{r GusA Activity Assay, fig.cap="Figure 6. GusA Activity Assay"}
+GusA <- read.csv("/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/GusA Activity Assay.csv")
+GusA$Sample <- factor(GusA$Sample, levels = unique(GusA$Sample))
+
+ggplot(data=GusA, aes(x=Sample, y=Miller.Unit)) +
+  geom_bar(stat='identity', fill="blue") +
+  geom_text(aes(label = Miller.Unit), vjust = -0.5, size = 3) +
+  labs(x="Sample", y="Miller Units")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Figure 7. Bradford Assay to determine concentration of soluble protein and Densitometry analysis to estimate endolysin concentration.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure7.png)
+
+
+
+
+
+
+
+
+
+![Figure 8. SDS-Page of total soluble protein for controls C1-C6 and empty pUC19 vector.](/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Figure8.png)
+
+
+
+
+
+
+
+
+```{r Heat Map for Enzyme Activity Assay}
+Activity <- read.csv("/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/Heat Map from Activity Assay.csv")
+Activity <- Activity%>% select(-X, -X.1)
+Activity$Indicator.Strains <- as.factor(Activity$Indicator.Strain)
+Activity$Enzyme <- as.factor(Activity$Enzyme)
+
+Activity$Enzyme <- factor(Activity$Enzyme, levels = unique(Activity$Enzyme))
+Activity$Indicator.Strains <- factor(Activity$Indicator.Strains, levels = unique(Activity$Indicator.Strains))
+Activity$X.inhibition[Activity$X.inhibition < 0] <- NA
+               
+ggplot(data=Activity, aes(x = Enzyme, y = Indicator.Strains, fill = X.inhibition)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "white", high = "blue", na.value = "white") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Heat Map from Growth Inhibition Assay", x="Enzyme", y="Indicator Strains", caption="Figure 9. Heat map showing inhibitory activity of endolysins relative to negative control GusA.") +
+  guides(fill = guide_legend(title = "Legend"))
+  
+
+```
+
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">Discussion</span>
+
+
+     From the SDS-PAGE and Figure 10 below, it seemed like C1 and C6 produced large quantities of protein, and their common property is the lack of a PG binding domain. Conversely, C2-C5 which have PG binding domains showed low protein expression. It is possible that (1) upon cell lysis, the endolysins with a PG binding domain bound to the bacterial cell wall and were pelleted down into the insoluble fraction or (2) the expressed proteins misfolded and fractionated in the inclusion body fraction that was not used for analysis. Further literature review revealed a similar experiment produced the same interesting results. As shown in Figure 10 , Leu et al. (2020) identified expressed endolysin in the whole cell lysate as well as the purified product but saw low detection in the soluble fraction. This will be an important consideration to make as the research is carried forth. 
+     
+```{r Pep Domain vs Expression}
+PepBD <- read.csv("/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/PepDomain.csv")
+PepBD <- PepBD%>% select(-X)
+PepBD <- na.omit(PepBD)
+PepBD$Number <- factor(PepBD$Number, levels = unique(PepBD$Number))
+
+ggplot(data=PepBD, aes(x=Number, y=Protein, fill=PBD)) +
+  geom_bar(stat='identity') +
+  labs(x="Sample", y="Estimated Expressed Protein (mg/mL)", caption="Figure 10. Effect of Peptidoglycan Binding Domain on Expressed Protein")
+  
+```
+     
+     
+     
+        There are some important considerations to make while interpreting the results of the growth inhibition assay. As mentioned above, endolysin concentrations were not normalized before exposure to the indicator strains. This means that the endolysins were not dosed equally, and some of them (as denoted by BQL = Below Quantitative Limit) were severely underdosed. However, they still showed some inhibitory activity. As a result, this limits the conclusions that can be drawn about relative inhibitory activity as a high level of variance can be attributed to the concentration of endolysin added. This stresses a conservative approach to categorizing these endolysins. Secondly, the experiment was designed as a primary screen and proof of concept and positive results were denoted by the fact that most endolysins outperformed Lysozyme and hence, had some antimicrobial activity. 
+      As shown in Figures 11 and 12, the endolysins were grouped into two categories of spectra – narrow inhibiting 1-4 strains and broad inhibiting 5 or more strains. No consideration was made for the degree of inhibition < 20%. 
+
+```{r Endolysin Candidates}
+Narrow <- read.csv("/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/NarrowA.csv") 
+Broad <- read.csv("/Users/ahilyak/Desktop/Fall 2023/BIOL 706/Final Project/BroadA.csv")
+
+Narrow <- na.omit(Narrow)
+Narrow$Sample <- factor(Narrow$Sample, levels = unique(Narrow$Sample))
+ggplot(data=Narrow, aes(x=Sample, y= X.strains.inhibited)) +
+  geom_bar(stat='identity', aes(fill=X.strains.inhibited)) +
+  labs(x="Sample", y="Number of strains inhibited", caption="Figure 11. Bar plot showing number of strains inhibited by endolysins showing narrow antimicrobial activity.")
+
+Broad$Sample <- factor(Broad$Sample, levels = unique(Broad$Sample))
+ggplot(data=Broad, aes(x=Sample, y= X.strains.inhibited)) +
+  geom_bar(stat='identity', aes(fill=X.strains.inhibited)) +
+  labs(x="Sample", y="Number of strains inhibited", caption="Figure 12. Bar plot showing number of strains inhibited by endolysins showing braod antimicrobial activity.")
+```
+
+
+
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">Conclusions and Future Implications</span>
+
+      The experiment revealed four major conclusions and points for consideration. There is a correlation between low endolysin expression and the presence of a PG binding domain. Top 4 best performing candidates were C6, S7, S1 and S4. Since endolysin concentrations were not normalized, positive results were likely accurate but negative results could be a false negative. For a more accurate comparison of antimicrobial activity, the C-terminal Hisx6-tag could be used to purify the endolysins and dose them equally. 
+      
+      Future research will entail the production of selected endolysins in either bacterial or yeast biocatalyst hosts and consider the economic justification of product development.
+
+
+
+
+<span style="font-weight:bold; font-size:20px; text-align: center;">References</span>
+
+Endolysins as Antimicrobials - Sciencedirect, www.sciencedirect.com/science/article/pii/B9780123944382000074. Accessed 12 Aug. 2023. 
+
+
+
+Khatibi, Piyum A, et al. “Saccharomyces Cerevisiae Expressing Bacteriophage Endolysins Reduce Lactobacillus Contamination during Fermentation.” Biotechnology for Biofuels, vol. 7, no. 1, 2014, https://doi.org/10.1186/1754-6834-7-104. 
+
+
+
+Kim, Jun-Seob, et al. “Yeast Derived Lysa2 Can Control Bacterial Contamination in Ethanol Fermentation.” Viruses, vol. 10, no. 6, 2018, p. 281, https://doi.org/10.3390/v10060281. 
+
+
+
+Roach, Dwayne R, et al. “Bacteriophage-Encoded Lytic Enzymes Control Growth of Contaminating Lactobacillus Found in Fuel Ethanol Fermentations.” Biotechnology for Biofuels, vol. 6, no. 1, 2013, https://doi.org/10.1186/1754-6834-6-20. 
+
+
+
+
+Chapot-Chartier, Marie-Pierre, and Saulius Kulakauskas. “Cell Wall Structure and Function in Lactic Acid Bacteria.” Microbial Cell Factories, vol. 13, no. Suppl 1, Springer Science+Business Media, Jan. 2014, p. S9. https://doi.org/10.1186/1475-2859-13-s1-s9.
+
+Lu, Shao-Yeh, et al. “Recombinant Bacteriophage LysKB317 Endolysin Mitigates Lactobacillus Infection of Corn Mash Fermentations.” Biotechnology for Biofuels, vol. 13, no. 1, Springer Science+Business Media, Sept. 2020, https://doi.org/10.1186/s13068-020-01795-9.
+
+
+
+Axelsson, Lars, et al. “Development of an Inducible Gene Expression System for Lactobacillus Sakei.” Letters in Applied Microbiology, vol. 37, no. 2, Oxford UP, Aug. 2003, pp. 115–20. https://doi.org/10.1046/j.1472-765x.2003.01360.x.
+
+
+
+
+
